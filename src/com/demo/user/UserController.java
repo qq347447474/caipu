@@ -1,6 +1,7 @@
 package com.demo.user;
 
 import com.demo.common.model.Blog;
+import com.demo.common.model.User;
 import com.jfinal.aop.Before;
 import com.jfinal.core.Controller;
 
@@ -13,14 +14,15 @@ public class UserController extends Controller {
 	public void index() {
 		//setAttr("blogPage", Blog.me.paginate(getParaToInt(0, 1), 10));
 		//render("blog.html");
-	}
-	
-	public void add() {
+		render("/signin.html");
 	}
 	
 	@Before(UserValidator.class)
-	public void reg(){
-		getPara("");
+	public void add(){
+		boolean issuccess = getModel(User.class).save();
+		setAttr("msg", issuccess?"注册成功!":"注册失败");
+		//redirect("/reg");
+		render("/signup.html");
 	}
 	
 	public void save() {

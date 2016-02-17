@@ -1,6 +1,7 @@
 package com.demo.common.config;
 
 import com.demo.blog.BlogController;
+import com.demo.common.CommonHandler;
 import com.demo.common.model._MappingKit;
 import com.demo.index.IndexController;
 import com.demo.user.UserController;
@@ -11,6 +12,7 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
+import com.jfinal.ext.handler.ContextPathHandler;
 import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
@@ -69,7 +71,8 @@ public class DemoConfig extends JFinalConfig {
 	 * 配置处理器
 	 */
 	public void configHandler(Handlers me) {
-		
+		//me.add(new CommonHandler());
+		me.add(new ContextPathHandler("ctx"));
 	}
 	
 	/**
