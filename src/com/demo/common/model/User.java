@@ -8,4 +8,8 @@ import com.demo.common.model.base.BaseUser;
 @SuppressWarnings("serial")
 public class User extends BaseUser<User> {
 	public static final User dao = new User();
+
+    public User findByUsername(String username) {
+        return super.findFirst("select * from user where username = ?", username);
+    }
 }

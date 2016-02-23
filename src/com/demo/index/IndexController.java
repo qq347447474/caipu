@@ -7,11 +7,15 @@ import com.jfinal.core.Controller;
  */
 public class IndexController extends Controller {
 	public void index() {
-		render("index.html");
+		render("/signin.html");
 	}
 	
 	public void reg(){
 		render("/signup.html");
+	}
+	
+	public void login(){
+		render("/signin.html");
 	}
 }
 

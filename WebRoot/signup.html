@@ -44,7 +44,7 @@
 								<input type="checkbox" id="chkAccept" name="isAccept">
 								<label for="chkAccept"></label>
 							</div>
-							我接受此协议${ctx!}
+							我接受此协议
 						</div>
 					<div class="alert alert-danger alert-custom alert-dismissible"
 						role="alert" style="display:none;" id="errorInfo">
@@ -53,17 +53,17 @@
 						</button>
 						<i class="fa fa-times-circle m-right-xs"></i><strong>错误!</strong>
 						<span id="errorInfo">
-							${errorMsg!}
+							
 						</span>
 					</div>
 				    
 						<div class="m-top-md p-top-sm">
-							<a href="#" class="btn btn-success block"  onclick="submit();return false" >创建账号</a>
+							<a href="#" id="reg_btn" class="btn btn-success block"  onclick="reg();" >创建账号</a>
 						</div>
 
 						<div class="m-top-md p-top-sm">
 							<div class="font-12 text-center m-bottom-xs">已经有一个账号?</div>
-							<a href="signin.html" class="btn btn-default block">登录</a>
+							<a href="login" class="btn btn-default block">登录</a>
 						</div>
 					</form>
 					
@@ -96,17 +96,31 @@
 		<script src="${ctx}/js/simplify/simplify.js"></script>
 	
 	<script>
-	function submit(){
-		if ($("#chkAccept").is(':checked')!=true) {
-			$("#errorInfo").html($("#errorInfo").html().replace("请勾选协议",""));
-			$("#errorInfo").append('请勾选协议');
-			$("#errorInfo").css('display','block'); 
-			return;
-		}else{
-			$("#errorInfo").css('display','none'); 
-		}
-		document.getElementById('regform').submit();
-	}
+	function reg() {
+        $("#reg_btn").attr("disabled", true);
+        $.ajax({
+            url: "${ctx}/user/add",
+            async: false,
+            cache: false,
+            type: 'post',
+            dataType: "json",
+            data: {
+            	username: $("#username").val(),
+                password: $("#password").val(),
+                repassword: $("#repassword").val(),
+            },
+            success: function (data) {
+                if (data.code == '200') {
+                	alert('注册成功！');
+                    location.href="/login";
+                } else {
+                    $("#errorInfo").css('display','block').html(data.description);
+                    $("#reg_btn").attr("disabled", false);
+                }
+            }
+        });
+    }
+	
 	$(function(){
 	 	//用户名失去焦点
 	    $("#username").blur(function(){
@@ -139,14 +153,6 @@
 	        }
 	    });
 	});
-	if ("${isError!}") {
-		$("#errorInfo").css('display','block'); 
-	}else{
-		$("#errorInfo").css('display','none'); 
-	}
-	if ("${msg!}") {
-		alert("${msg!}");
-	}
 	//动态添加错误样式
 //		$('#username').addClass('has-error');
 //错误提示框
