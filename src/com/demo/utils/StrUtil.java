@@ -33,7 +33,7 @@ public class StrUtil extends StrKit {
 
     public static String getUUID() {
         String uuid = UUID.randomUUID().toString();
-        return uuid.replaceAll("-", "");
+        return uuid.replaceAll("-", "").toUpperCase();
     }
 
     public static String randomString(int length) {

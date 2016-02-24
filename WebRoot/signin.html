@@ -31,10 +31,10 @@
 
 					<form>
 						<div class="form-group m-bottom-md">
-							<input type="text" class="form-control" placeholder="用户名">
+							<input id="username" type="text" class="form-control" placeholder="用户名">
 						</div>
 						<div class="form-group">
-							<input type="password" class="form-control" placeholder="密码">
+							<input id="password" type="password" class="form-control" placeholder="密码">
 						</div>
 
 						<div class="form-group">
@@ -44,15 +44,26 @@
 							</div>
 							记住我
 						</div>
-
+						
+						<div class="alert alert-danger alert-custom alert-dismissible"
+						role="alert" style="display:none;" id="errorInfos">
+							<button type="button" class="close" data-dismiss="alert">
+								<span class="sr-only">Close</span>
+							</button>
+							<i class="fa fa-times-circle m-right-xs"></i><strong>错误!</strong>
+							<span id="errorInfo">
+								
+							</span>
+						</div>
+					
 						<div class="m-top-md p-top-sm">
-							<a href="index.html" class="btn btn-success block">登录</a>
+							<a href="#" id="login_btn" class="btn btn-success block">登录</a>
 						</div>
 
 						<div class="m-top-md p-top-sm">
-							<div class="font-12 text-center m-bottom-xs">
+							<!-- <div class="font-12 text-center m-bottom-xs">
 								<a href="#" class="font-12">忘记密码 ?</a>
-							</div>
+							</div> -->
 							<div class="font-12 text-center m-bottom-xs">没有帐号?</div>
 							<a href="reg" class="btn btn-default block">创建一个账号</a>
 						</div>
@@ -84,8 +95,8 @@
 		
 		<!-- Simplify -->
 		<script src="js/simplify/simplify.js"></script>
-	
-		<script type="text/javascript">
-		</script>
+		
+		<!-- login -->
+		<script src="js/login.js"></script>
   	</body>
 </html>

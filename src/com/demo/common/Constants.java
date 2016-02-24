@@ -24,6 +24,12 @@ public class Constants {
     public static final String DELETE_FAILURE = "删除失败";
 
     public static final String USER_SESSION = "user";
+
+    public static final String USER_COOKIE = "user_cookie";
+
+    // 验证码类型
+    public static final String FORGET_PWD = "forgetpwd";
+    public static final String REG = "reg";
     public static String getValue(String key) {
         //return SysConfig.me.findByKey(key);
     	return null;

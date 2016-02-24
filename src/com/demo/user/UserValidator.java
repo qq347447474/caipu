@@ -1,6 +1,5 @@
 package com.demo.user;
 
-import com.demo.common.model.User;
 import com.jfinal.core.Controller;
 import com.jfinal.validate.Validator;
 

@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.Properties;
 
 import org.eclipse.jetty.client.Address;
-import org.eclipse.jetty.server.session.JDBCSessionManager.Session;
 
 import com.demo.common.Constants;
 
@@ -45,7 +44,7 @@ public class EmailSender {
 
     /**
      * 此段代码用来发送普通电子邮件
-     *//*
+     */
     public void send(String subject, String[] mailTo, String mailBody) throws Exception {
         try {
             Properties props = new Properties(); // 获取系统环境
@@ -74,12 +73,12 @@ public class EmailSender {
             ex.printStackTrace();
             throw new Exception(ex.getMessage());
         }
-    }*/
+    }
 
     /**
      * 用来进行服务器对用户的认证
      */
-    /*public class Email_Autherticator extends Authenticator {
+    public class Email_Autherticator extends Authenticator {
         public Email_Autherticator() {
             super();
         }
@@ -93,9 +92,9 @@ public class EmailSender {
         public PasswordAuthentication getPasswordAuthentication() {
             return new PasswordAuthentication(username, password);
         }
-    }*/
+    }
 
-    /*public static void sendMail(String title, String[] mailTo, String content) {
+    public static void sendMail(String title, String[] mailTo, String content) {
         String mailBody = EMAIL_BODY_HEADER + content;
         try {
             EmailSender.getInstance().send(title, mailTo, mailBody);
@@ -103,10 +102,10 @@ public class EmailSender {
             System.out.println("email send error:" + mailBody);
             e.printStackTrace();
         }
-    }*/
+    }
 
     public static void main(String[] args) {
-        //sendMail(null, new String[]{""}, "测试邮件内容");
+        sendMail(null, new String[]{""}, "测试邮件内容");
     }
 
 }

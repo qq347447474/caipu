@@ -29,10 +29,13 @@
 						 Chinese <strong class="text-skin">Recipe</strong>
 					</div>
 
-					<form action="/user/add" method="post" id="regform">
-						<div class="form-group m-bottom-md" id="usernamediv">
-							<input type="text" class="form-control" autocomplete="off" id="username" name="user.username" value="${(user.username)!}" placeholder="用户名"><span class="label label-danger"></span>
-						</div>
+					<form action="#" method="post" id="regform">
+					<div class="form-group m-bottom-md input-group" id="usernamediv">
+												<input type="text" class="form-control" autocomplete="off" id="username" name="user.username" value="${(user.username)!}" placeholder="邮箱地址"><span class="label label-danger"></span>
+												<span class="input-group-btn">
+													<button class="btn btn-default" type="button" id="send_email_btn" onclick="sendEmail()">发送验证码</button>
+												</span>
+											</div>
 						<div class="form-group" id="passworddiv">
 							<input type="password" class="form-control" id="password" name="user.password" value="${(user.password)!}"  placeholder="密码">
 						</div>
@@ -41,15 +44,15 @@
 						</div>
 						<div class="form-group">
 							<div class="custom-checkbox">
-								<input type="checkbox" id="chkAccept" name="isAccept">
+								<input type="checkbox" id="chkAccept">
 								<label for="chkAccept"></label>
 							</div>
 							我接受此协议
 						</div>
 					<div class="alert alert-danger alert-custom alert-dismissible"
-						role="alert" style="display:none;" id="errorInfo">
+						role="alert" style="display:none;" id="errorInfos">
 						<button type="button" class="close" data-dismiss="alert">
-							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+							<span class="sr-only">Close</span>
 						</button>
 						<i class="fa fa-times-circle m-right-xs"></i><strong>错误!</strong>
 						<span id="errorInfo">
@@ -58,7 +61,7 @@
 					</div>
 				    
 						<div class="m-top-md p-top-sm">
-							<a href="#" id="reg_btn" class="btn btn-success block"  onclick="reg();" >创建账号</a>
+							<a href="#" id="reg_btn" class="btn btn-success block" >创建账号</a>
 						</div>
 
 						<div class="m-top-md p-top-sm">
@@ -94,70 +97,8 @@
 		
 		<!-- Simplify -->
 		<script src="${ctx}/js/simplify/simplify.js"></script>
-	
-	<script>
-	function reg() {
-        $("#reg_btn").attr("disabled", true);
-        $.ajax({
-            url: "${ctx}/user/add",
-            async: false,
-            cache: false,
-            type: 'post',
-            dataType: "json",
-            data: {
-            	username: $("#username").val(),
-                password: $("#password").val(),
-                repassword: $("#repassword").val(),
-            },
-            success: function (data) {
-                if (data.code == '200') {
-                	alert('注册成功！');
-                    location.href="/login";
-                } else {
-                    $("#errorInfo").css('display','block').html(data.description);
-                    $("#reg_btn").attr("disabled", false);
-                }
-            }
-        });
-    }
-	
-	$(function(){
-	 	//用户名失去焦点
-	    $("#username").blur(function(){
-	        if( $("#username").val().trim()=="")
-	        { 
-	        	$('#usernamediv').addClass('has-error');
-	        }else{
-	        	$('#usernamediv').removeClass('has-error');
-	        	$('#usernamediv').addClass('has-success');
-	        }
-	    });
-	 	//密码失去焦点
-	    $("#password").blur(function(){
-	        if( $("#password").val().trim()=="")
-	        { 
-	        	$('#passworddiv').addClass('has-error');
-	        }else{
-	        	$('#passworddiv').removeClass('has-error');
-	        	$('#passworddiv').addClass('has-success');
-	        }
-	    });
-	 	//验证密码失去焦点
-	    $("#repassword").blur(function(){
-	        if( $("#repassword").val().trim()!=$("#password").val().trim())
-	        { 
-	        	$('#repassworddiv').addClass('has-error');
-	        }else{
-	        	$('#repassworddiv').removeClass('has-error');
-	        	$('#repassworddiv').addClass('has-success');
-	        }
-	    });
-	});
-	//动态添加错误样式
-//		$('#username').addClass('has-error');
-//错误提示框
-//<div class="alert alert-danger alert-custom alert-dismissible" role="alert">	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><i class="fa fa-times-circle m-right-xs"></i> <strong>错误!</strong> Change a few things up and try submitting again.</div>
-//$('#errorInfo').html('<div class="alert alert-danger alert-custom alert-dismissible" role="alert">	<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button><i class="fa fa-times-circle m-right-xs"></i> <strong>错误!</strong> Change a few things up and try submitting again.</div>');
-	</script>
+		
+		<!-- reg -->
+		<script src="${ctx}/js/reg.js"></script>
   	</body>
 </html>
