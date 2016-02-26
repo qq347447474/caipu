@@ -3,7 +3,6 @@ package com.demo.user;
 import java.util.Date;
 
 import com.demo.base.BaseController;
-import com.demo.blog.Blog;
 import com.demo.common.Constants;
 import com.demo.utils.DateUtil;
 import com.demo.utils.EmailSender;
@@ -32,26 +31,32 @@ public class UserController extends BaseController {
             String password = getPara("password");
             String repassword = getPara("repassword");
             boolean chkAccept = getParaToBoolean("chkAccept");
+            String valicode = getPara("valicode");
             String token = StrUtil.getUUID();
             if (StrUtil.isBlank(username) || StrUtil.isBlank(password) || StrUtil.isBlank(repassword)) {
                 error("请完善注册信息");
             }else if (!chkAccept){
             	error("协议必须同意");
             }else{
-            	if(!StrUtil.isEmail(username)){
-            		error("请输入正确的邮箱地址");
-            	}else if (!password.equals(repassword)) {
-            		error("两次密码输入不一致!");
-				}else{
-					if (User.dao.findByUsername(username) != null){
-						error("用户名已被注册，请直接登录");
-					}else{
-						User user = new User();
-						user.set("username", username).set("password", password).set("token", token).save();
-						//setSessionAttr(Constants.USER_SESSION, user);
-						success();
-					}
-				}
+            	ValiCode code = ValiCode.me.findByCodeAndEmail(valicode, username, Constants.REG);
+                if (code == null){
+                	error("验证码不存在或已使用(已过期)");
+                }else{
+                	if(!StrUtil.isEmail(username)){
+                		error("请输入正确的邮箱地址");
+                	}else if (!password.equals(repassword)) {
+                		error("两次密码输入不一致!");
+    				}else{
+    					if (User.dao.findByUsername(username) != null){
+    						error("用户名已被注册，请直接登录");
+    					}else{
+    						User user = new User();
+    						user.set("username", username).set("password", password).set("token", token).save();
+    						//setSessionAttr(Constants.USER_SESSION, user);
+    						success();
+    					}
+    				}
+                }
             }
 		}
 		/*boolean issuccess = getModel(User.class).save();
@@ -118,7 +123,7 @@ public class UserController extends BaseController {
                     success();
                 }
             } else if (type.equalsIgnoreCase(Constants.REG)) {
-                User user = User.me.findByEmail(email);
+                User user = User.dao.findByUsername(email);
                 if (user != null) {
                     error("邮箱已经注册，请直接登录");
                 } else {
@@ -131,34 +136,16 @@ public class UserController extends BaseController {
                             .set("target", email)
                             .save();
                     StringBuffer mailBody = new StringBuffer();
-                    mailBody.append("Register your account verification code is: ")
-                            .append(valicode)
-                            .append("<br/>The code can only be used once, and only valid for 30 minutes.");
-                    EmailSender.sendMail("JFinalbbs－Registered Account codes", new String[]{email}, mailBody.toString());
+                    mailBody.append("您的帐户注册验证码是: <br/>")
+                            .append("<h2>"+valicode+"</h2>")
+                            .append("<br/>该验证码只能使用一次，有效期为30分钟.");
+                    EmailSender.sendMail("Chinese Recipe 验证码", new String[]{email}, mailBody.toString());
                     success();
                 }
             }
         }
     }
 	
-	public void save() {
-		getModel(Blog.class).save();
-		redirect("/blog");
-	}
-	
-	public void edit() {
-		setAttr("blog", Blog.me.findById(getParaToInt()));
-	}
-	
-	public void update() {
-		getModel(Blog.class).update();
-		redirect("/blog");
-	}
-	
-	public void delete() {
-		Blog.me.deleteById(getParaToInt());
-		redirect("/blog");
-	}
 }
 
 

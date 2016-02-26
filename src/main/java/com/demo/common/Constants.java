@@ -1,5 +1,7 @@
 package com.demo.common;
 
+import com.demo.system.SysConfig;
+
 
 /***
  * 系统变量
@@ -30,8 +32,11 @@ public class Constants {
     // 验证码类型
     public static final String FORGET_PWD = "forgetpwd";
     public static final String REG = "reg";
+
+    public static final String SYSCONFIGCACHE = "sysconfigcache";
+    //sysconfig
+    public static final String SYSCONFIGCACHEKEY = "sysconfigcachekey";
     public static String getValue(String key) {
-        //return SysConfig.me.findByKey(key);
-    	return null;
+        return SysConfig.me.findByKey(key);
     }
 }

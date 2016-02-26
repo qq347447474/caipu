@@ -13,6 +13,7 @@ function reg() {
 			password : $("#password").val(),
 			repassword : $("#repassword").val(),
 			chkAccept : $("#chkAccept").is(':checked'),
+			valicode : $("#valicode").val()
 		},
 		success : function(data) {
 			if (data.code == '200') {
@@ -55,6 +56,15 @@ $(function() {
 			$('#repassworddiv').addClass('has-success');
 		}
 	});
+	// 验证码失去焦点
+	$("#valicode").blur(function() {
+		if ($("#valicode").val().trim() == "") {
+			$('#valicodediv').addClass('has-error');
+		} else {
+			$('#valicodediv').removeClass('has-error');
+			$('#valicodediv').addClass('has-success');
+		}
+	});
 });
 
 function sendEmail() {
@@ -74,8 +84,9 @@ function sendEmail() {
                 $("#send_email_btn").html("发送成功");
                 $("#reg_email").attr("disabled", true);
             } else {
-                $("#regMsg").css("color", "red").html(data.description);
-                $("#send_email_btn").attr("disabled", false);
+            	$("#errorInfos").css('display', 'block');
+				$("#errorInfo").html(data.description);
+				$("#send_email_btn").attr("disabled", false);
             }
         }
     });
